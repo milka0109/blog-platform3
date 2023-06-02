@@ -1,0 +1,27 @@
+.article {
+  margin: 24px auto;
+  width: 938px;
+  height: max-content;
+  background-color: #FFFFFF;
+  filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15));
+  &__body {
+    overflow-wrap: anywhere;
+    padding: 25px 15px;
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  &__body ul, ol {
+    margin-left: 30px;
+  }
+  &__body img {
+    max-width: 500px;
+  }
+  &__body a {
+    text-decoration: underline;
+    color: blue;
+  }
+  &__body a:hover {
+    color: purple;
+  }
+}
