@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Button, Popconfirm, Tag } from "antd";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
+import { useMemo, useRef } from "react";
 
 import {
   useDeleteArticleMutation,
@@ -23,7 +24,11 @@ export const ShortenItem = ({ article, fullArticle = false }) => {
   const { slug, title, favorited, favoritesCount, tagList, author, createdAt, description } = article;
   const { username, image } = author;
 
+  const avatar = useMemo(() => image || defaultAvatar, [image, defaultAvatar]);
+
   const titleText = title.length ? title : "[anonymous article]";
+
+  const articleRef = useRef();
 
   const isClicked = favorited ? <HeartFilled style={{ color: "red" }} /> : <HeartOutlined />;
   const onToggleFavorite = async () => {
@@ -34,12 +39,14 @@ export const ShortenItem = ({ article, fullArticle = false }) => {
     }
   };
 
+  const onError = () => {
+    articleRef.current.src = defaultAvatar;
+  };
+
   const onDelete = () => {
     deleteArticle(slug);
     navigate("/articles", { replace: true });
   };
-
-  const avatar = image || defaultAvatar;
 
   const buttons = (
     <div className={styles.buttons}>
@@ -92,7 +99,7 @@ export const ShortenItem = ({ article, fullArticle = false }) => {
         <div className={styles.userInfo}>
           <span className={styles.userName}>{username}</span>
           <span className={styles.date}>{formatDate(createdAt)}</span>
-          <img src={avatar} alt="avatar" className={styles.avatar} />
+          <img src={avatar} alt="avatar" className={styles.avatar} ref={articleRef} onError={onError} />
         </div>
         {userAuth === username && fullArticle && buttons}
         <div className={styles.description}>

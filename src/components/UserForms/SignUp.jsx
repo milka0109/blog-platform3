@@ -17,12 +17,14 @@ export const SignUp = () => {
     register,
     reset,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitSuccessful },
     watch,
   } = useForm({ defaultValues: { username: "", email: "", password: "", repeatPassword: "" } });
   const onSubmit = async (user) => {
     await submitUserData(user, signUpUser, dispatch, reset);
-    navigate("/articles", { replace: true });
+    if (isSubmitSuccessful) {
+      navigate("/articles", { replace: true });
+    }
   };
   const inputError = (name) => {
     if (errors[name]) {
@@ -69,7 +71,7 @@ export const SignUp = () => {
           <div className={styles.labelText}>Email address</div>
           <input
             className={cn(styles.input, { [styles.errorInput]: errors.email })}
-            type="text"
+            type="email"
             id="email"
             autoComplete="off"
             placeholder="Email Address"

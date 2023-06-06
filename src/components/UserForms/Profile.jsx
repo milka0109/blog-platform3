@@ -64,7 +64,7 @@ export const Profile = () => {
           <div className={styles.labelText}>Email address</div>
           <input
             className={cn(styles.input, { [styles.errorInput]: errors.email })}
-            type="text"
+            type="email"
             id="email"
             autoComplete="off"
             placeholder="Email Address"

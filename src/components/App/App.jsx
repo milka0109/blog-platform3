@@ -14,45 +14,55 @@ import {
 } from "../../pages";
 
 export const App = () => {
+  const rootPath = "/";
+  const articlesPath = "articles";
+  const articleSlugPath = "articles/:slug";
+  const articleSlugEditPath = "articles/:slug/edit";
+  const newArticlePath = "new-article";
+  const signUpPath = "sign-up";
+  const signInPath = "sign-in";
+  const profilePath = "profile";
+  const notFoundPath = "*";
+
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: rootPath,
       element: <Navigate to="/articles" replace />,
     },
     {
-      path: "/",
+      path: rootPath,
       element: <LayoutPage />,
       children: [
         {
-          path: "articles",
+          path: articlesPath,
           element: <ListPage />,
         },
         {
-          path: "articles/:slug",
+          path: articleSlugPath,
           element: <ArticlePage />,
         },
         {
-          path: "articles/:slug/edit",
+          path: articleSlugEditPath,
           element: <EditArticlePage />,
         },
         {
-          path: "new-article",
+          path: newArticlePath,
           element: <CreateArticlePage />,
         },
         {
-          path: "sign-up",
+          path: signUpPath,
           element: <SignUpPage />,
         },
         {
-          path: "sign-in",
+          path: signInPath,
           element: <SignInPage />,
         },
         {
-          path: "profile",
+          path: profilePath,
           element: <ProfilePage />,
         },
         {
-          path: "*",
+          path: notFoundPath,
           element: <NotFoundPage />,
         },
       ],

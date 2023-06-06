@@ -16,7 +16,7 @@ export const SignIn = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitSuccessful },
     reset,
   } = useForm({ defaultValues: { username: "", email: "", password: "", repeatPassword: "" } });
   const location = useLocation();
@@ -24,7 +24,9 @@ export const SignIn = () => {
 
   const onSubmit = async (user) => {
     await submitUserData(user, signInUser, dispatch, reset);
-    navigate(redirectAddress, { replace: true });
+    if (isSubmitSuccessful) {
+      navigate(redirectAddress, { replace: true });
+    }
   };
 
   const inputError = (name) => {
@@ -49,7 +51,7 @@ export const SignIn = () => {
           <div className={styles.labelText}>Email address</div>
           <input
             className={cn(styles.input, { [styles.errorInput]: errors.email })}
-            type="text"
+            type="email"
             id="email"
             autoComplete="off"
             placeholder="Email Address"

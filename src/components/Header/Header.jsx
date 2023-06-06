@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
@@ -12,6 +12,7 @@ import styles from "./Header.module.scss";
 export const Header = () => {
   const { username, image } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const imgRef = useRef();
 
   useEffect(() => {
     if (getCookie("Token")) {
@@ -24,6 +25,10 @@ export const Header = () => {
     deleteStorageUser();
     dispatch(clearUserData());
     deleteCookie("Token");
+  };
+
+  const onError = () => {
+    imgRef.current.src = defaultAvatar;
   };
 
   const loggedOut = (
@@ -43,7 +48,7 @@ export const Header = () => {
       </Link>
       <Link to="/profile" className={styles.user}>
         <span>{username}</span>
-        <img src={image || defaultAvatar} alt="avatar" />
+        <img src={image || defaultAvatar} alt="avatar" ref={imgRef} onError={onError} />
       </Link>
       <button type="button" className={styles.link} onClick={logOut}>
         Log Out
